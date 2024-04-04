@@ -1,11 +1,13 @@
+import java.util.Objects;
+
 public class Curso {
     private String id;
     private String nombre;
     private String descripcion;
     private int numeroCreditos;
-    private int version;
+    private String version;
 
-    public Curso(String id, String nombre, String descripcion, int numeroCreditos, int version) {
+    public Curso(String id, String nombre, String descripcion, int numeroCreditos, String version) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -45,11 +47,37 @@ public class Curso {
         this.numeroCreditos = numeroCreditos;
     }
 
-    public int getVersion() {
+    public String getVersion() {
         return version;
     }
 
-    public void setVersion(int version) {
+    public void setVersion(String version) {
         this.version = version;
+    }
+
+    // Sobreescritura del metodo toString para ser utilizado en la impresion de la informacion.
+    @Override
+    public String toString() {
+        return "Curso{" +
+                "ID = '" + id + '\'' +
+                ", Nombre = '" + nombre + '\'' +
+                ", Descripción = '" + descripcion + '\'' +
+                ", Número de Créditos = " + numeroCreditos +
+                ", Versión = " + version +
+                '}';
+    }
+
+    // Sobreescritura del metodo equals(utilizado por contains) para poder verificar si existe un curso en base al ID.
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Curso curso = (Curso) o;
+        return Objects.equals(id, curso.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

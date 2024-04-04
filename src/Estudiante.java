@@ -1,17 +1,14 @@
-import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.util.Objects;
 
-public class Estudiante {
+public class Estudiante extends Persona{
     private String id;
-    private String nombre;
-    private String apellido;
-    private Date fechaDeNacimiento;
     private String estado;
 
-    public Estudiante(String id, String nombre, String apellido, Date fechaDeNacimiento, String estado) {
+    public Estudiante(String nombre, String apellido, ZonedDateTime fechaDeNacimiento, String id, String estado) {
+        super(nombre, apellido, fechaDeNacimiento);
         this.id = id;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.fechaDeNacimiento = fechaDeNacimiento;
         this.estado = estado;
     }
 
@@ -23,30 +20,6 @@ public class Estudiante {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public Date getFechaDeNacimiento() {
-        return fechaDeNacimiento;
-    }
-
-    public void setFechaDeNacimiento(Date fechaDeNacimiento) {
-        this.fechaDeNacimiento = fechaDeNacimiento;
-    }
-
     public String getEstado() {
         return estado;
     }
@@ -55,14 +28,29 @@ public class Estudiante {
         this.estado = estado;
     }
 
+    // Sobreescritura del metodo toString para ser utilizado en la impresion de la informacion del HashMap.
     @Override
     public String toString() {
-        return "Estudiante{" +
-                "ID = '" + id + '\'' +
-                ", Nombre = '" + nombre + '\'' +
-                ", Apellido='" + apellido + '\'' +
-                ", Fecha De Nacimiento=" + fechaDeNacimiento +
-                ", Estado='" + estado + '\'' +
+        return "Estudiante {" +
+                "ID : " + id  +
+                ", Nombre : " + getNombre() +
+                ", Apellido : " + getApellido() +
+                ", Fecha de Nacimiento : " + getFechaDeNacimientoF() +
+                ", Estado : " + estado +
                 '}';
+    }
+
+    // Sobreescritura del metodo equals(utilizado por contains) para poder verificar si existe un estudiante en base al ID.
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Estudiante that = (Estudiante) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
